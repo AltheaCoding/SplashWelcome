@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="https://github.com/AltheaCoding/image-hosting/blob/main/QRARicon.png?raw=true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QRAR Lost & Found Center</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React and ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel to transpile JSX in the browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
+  <body class="bg-cyan-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+      // De-structure React hooks for convenience
+      const { useState } = React;
+
+      // --- From components/Icons.tsx ---
+      const ShieldCheckIcon = ({ className }) => (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 24 24" 
+          fill="currentColor" 
+          className={`w-5 h-5 ${className}`}
+        >
+          <path fillRule="evenodd" d="M12 1.5a.75.75 0 01.75.75v1.511c.75.113 1.47.365 2.164.739a.75.75 0 01-.288 1.423A6.743 6.743 0 0012 5.25a6.743 6.743 0 00-2.625.923.75.75 0 01-.288-1.423 8.22 8.22 0 012.164-.74V2.25A.75.75 0 0112 1.5zm-3.834 6.012a.75.75 0 011.06 0l1.244 1.243 2.2-2.201a.75.75 0 011.062 1.06l-2.75 2.75a.75.75 0 01-1.06 0L8.166 9.632a.75.75 0 010-1.06z" clipRule="evenodd" />
+          <path d="M3.283 8.943c.095-.246.223-.483.374-.707l.001-.002 4.474-6.102a.75.75 0 011.23.906L5.34 9.402a.75.75 0 01-1.23-.906l-.002.002c-.08-.108-.155-.219-.224-.332a5.25 5.25 0 00-5.83-8.683.75.75 0 01-.58 1.353 6.75 6.75 0 017.514 11.086 44.92 44.92 0 01.488 1.493.75.75 0 11-1.423.493 46.409 46.409 0 00-.47-1.442l-.003-.007a5.25 5.25 0 00-6.815-9.45zM20.717 8.943c-.095-.246-.223-.483-.374-.707l-.001-.002-4.474-6.102a.75.75 0 00-1.23.906L18.66 9.402a.75.75 0 001.23-.906l.002.002c.08-.108.155-.219.224-.332a5.25 5.25 0 015.83-8.683.75.75 0 00.58 1.353 6.75 6.75 0 00-7.514 11.086 44.92 44.92 0 00-.488 1.493.75.75 0 101.423.493 46.409 46.409 0 01.47-1.442l.003-.007a5.25 5.25 0 016.815-9.45z" />
+        </svg>
+      );
+
+      const CloseIcon = ({ className }) => (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          fill="none" 
+          viewBox="0 0 24 24" 
+          strokeWidth={1.5} 
+          stroke="currentColor" 
+          className={`w-6 h-6 ${className}`}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      );
+
+      const ChevronDownIcon = ({ className }) => (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className={`w-6 h-6 ${className}`}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+        </svg>
+      );
+
+      const LineIcon = ({ className }) => (
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          viewBox="0 0 512 512" 
+          fill="currentColor" 
+          className={`w-6 h-6 ${className}`}
+        >
+          <path d="M414.73,97.1A213.44,213.44,0,0,0,256.32,32C132.32,32,32,121.21,32,245.21c0,64.2,28.66,122.1,75.29,161.12L88.36,480l67.68-45.75c32.12,12.33,67.68,19,100.28,19,124,0,224.32-89.21,224.32-213.2S380.32,32,256.32,32Zm-48.4,228.8a12,12,0,0,1-12,12h-24a12,12,0,0,1-12-12v-60H288.05v60a12,12,0,0,1-12,12h-24a12,12,0,0,1-12-12v-84a12,12,0,0,1,12-12h24a12,12,0,0,1,12,12v12h30.28v-12a12,12,0,0,1,12-12h24a12,12,0,0,1,12,12v84Zm-144-12a12,12,0,0,1-12,12H186a12,12,0,0,1-12-12v-84a12,12,0,0,1,12-12h24.32a12,12,0,0,1,12,12v84Zm-72-12a12,12,0,0,1-12,12H96.32a12,12,0,0,1-12-12v-84a12,12,0,0,1,12-12h24a12,12,0,0,1,12,12v84Z"/>
+        </svg>
+      );
+
+      // --- From components/Buttons.tsx ---
+      const LineButton = ({ children, disabled, ...props }) => {
+        return (
+          <button
+            {...props}
+            disabled={disabled}
+            className={`w-full flex items-center justify-center gap-2 font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-4 transition-all duration-300 ease-in-out transform hover:scale-105
+              ${disabled
+                ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
+                : 'bg-[#06C755] text-white focus:ring-[#06C755]/50'
+              }
+            `}
+          >
+            {children}
+          </button>
+        );
+      };
+
+      const PrimaryButton = ({ children, disabled, ...props }) => {
+        return (
+          <button
+            {...props}
+            disabled={disabled}
+            className={`w-full flex items-center justify-center gap-3 font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-4 transition-all duration-300 ease-in-out transform hover:scale-105
+              ${disabled
+                ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
+                : 'bg-amber-700 text-white hover:bg-amber-800 focus:ring-amber-600/50'
+              }
+            `}
+          >
+            {children}
+          </button>
+        );
+      };
+      
+      const SecondaryButton = ({ children, className, ...props }) => {
+        return (
+          <button
+            {...props}
+            style={{ backgroundColor: '#FBF8F1' }}
+            className={`w-full flex items-center justify-center gap-3 text-stone-800 font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg hover:brightness-95 focus:outline-none focus:ring-4 focus:ring-amber-200/50 transition-all duration-300 ease-in-out transform hover:scale-105 ${className || ''}`}
+          >
+            {children}
+          </button>
+        );
+      };
+
+      // --- From components/ContactModal.tsx ---
+      const ContactModal = ({ isOpen, onClose }) => {
+        const [message, setMessage] = useState('');
+
+        if (!isOpen) return null;
+
+        const isButtonDisabled = message.trim() === '';
+
+        return (
+          <div 
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 transition-opacity duration-300"
+            onClick={onClose}
+          >
+            <div 
+              className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6 md:p-8 space-y-6 relative transform transition-all duration-300 scale-95 opacity-0 animate-fade-in-scale"
+              onClick={(e) => e.stopPropagation()}
+              style={{ animation: 'fade-in-scale 0.3s forwards' }}
+            >
+              <button onClick={onClose} className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 transition-colors">
+                <CloseIcon />
+              </button>
+
+              <header className="text-center">
+                <h2 className="text-2xl font-bold text-stone-800">其他聯絡方式</h2>
+                <p className="text-stone-600 mt-2">請透過以下方式留下您的訊息。</p>
+              </header>
+
+              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                <div>
+                  <label htmlFor="contact-method" className="block text-sm font-medium text-stone-700 mb-1">聯絡方式 (可不填)</label>
+                  <input 
+                    type="text" 
+                    id="contact-method"
+                    placeholder="例如：Email 或 其他通訊軟體"
+                    className="w-full px-3 py-2 bg-stone-50 border border-stone-300 text-stone-900 placeholder:text-stone-400 rounded-md focus:ring-amber-500 focus:border-amber-500 transition"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium text-stone-700 mb-1">您的訊息</label>
+                  <textarea 
+                    id="message" 
+                    rows={4}
+                    placeholder="請在此輸入您想傳達給失主的訊息..."
+                    className="w-full px-3 py-2 bg-stone-50 border border-stone-300 text-stone-900 placeholder:text-stone-400 rounded-md focus:ring-amber-500 focus:border-amber-500 transition"
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                  ></textarea>
+                </div>
+                <PrimaryButton 
+                  onClick={() => { alert('Message sent!'); onClose(); }}
+                  disabled={isButtonDisabled}
+                >
+                  傳送匿名訊息
+                </PrimaryButton>
+              </form>
+
+              <p className="text-xs text-center text-stone-500">
+                您的聯絡方式將被加密處理，僅用於本次協尋聯繫。
+              </p>
+
+              <style>{`
+                @keyframes fade-in-scale {
+                  from {
+                    transform: scale(0.95);
+                    opacity: 0;
+                  }
+                  to {
+                    transform: scale(1);
+                    opacity: 1;
+                  }
+                }
+              `}</style>
+            </div>
+          </div>
+        );
+      };
+
+      // --- From components/FAQ.tsx ---
+      const faqData = [
+        {
+          question: 'Q1：如果我趕時間，或失主沒有馬上回覆我怎麼辦？',
+          answer: 'A：我們完全理解。最好的做法是，您可以先將失物或孩童帶至附近最方便的警察局、捷運站或連鎖超商的服務台暫時安置，然後再透過本系統留言告知失主您放置的確切地點。您的幫助依然非常重要！'
+        },
+        {
+          question: 'Q2：為什麼建議使用 LINE 聯繫？',
+          answer: 'A：在台灣，Line是最多人使用的通訊軟體。使用 LINE 是最即時、最方便的方式。您可以快速傳送當下的 GPS 地點，這對焦急的失主來說是極有價值的資訊。同樣地，整個過程是完全匿名的，您的 LINE 隱私會受到完整的保護。'
+        },
+        {
+          question: 'Q3：如果失主提出不合理的要求（例如要我把東西送到很遠的地方）怎麼辦？',
+          answer: 'A：請以您自身的安全與方便為最高原則。您沒有義務滿足任何不合理的要求。將物品交由公正的第三方（如警察局）是我們最推薦的安全作法。'
+        },
+        {
+          question: 'Q4：這是什麼？我為什麼應該信任這個網站？',
+          answer: 'A：這是 QRAR 安心找回中心的官方協尋頁面。我們是一個專注於協尋失物與走散親友的安全平台。所有訊息都會以匿名、加密的方式轉達給失主，我們也絕不會向您索取個資或金融資訊，請您安心'
+        },
+      ];
+
+      const FAQItem = ({ item, isOpen, onClick, isDark }) => {
+        const textColor = isDark ? 'text-stone-200 hover:text-amber-400' : 'text-stone-700 hover:text-amber-700';
+        const answerColor = isDark ? 'text-stone-300' : 'text-stone-600';
+        const iconColor = isDark ? 'text-stone-500' : 'text-stone-400';
+        const borderColor = isDark ? 'border-stone-700' : 'border-stone-200';
+        
+        return (
+          <div className={`border-b ${borderColor} last:border-b-0`}>
+            <button 
+              onClick={onClick} 
+              className={`w-full flex justify-between items-center text-left font-semibold ${textColor} py-4 focus:outline-none transition-colors`}
+              aria-expanded={isOpen}
+            >
+              <span className="pr-4">{item.question}</span>
+              <ChevronDownIcon className={`w-5 h-5 ${iconColor} flex-shrink-0 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+            </button>
+            <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-screen pb-4' : 'max-h-0'}`}>
+              <p className={`${answerColor} text-sm leading-relaxed`}>
+                {item.answer}
+              </p>
+            </div>
+          </div>
+        );
+      };
+
+      const FAQ = ({ isDark }) => {
+        const [activeIndex, setActiveIndex] = useState(null);
+
+        const handleToggle = (index) => {
+          setActiveIndex(activeIndex === index ? null : index);
+        };
+
+        const headerColor = isDark ? 'text-white' : 'text-stone-800';
+
+        return (
+          <section className="pt-4">
+            <h2 className={`text-xl font-bold ${headerColor} mb-2 text-center`}>Q&A</h2>
+            <div>
+              {faqData.map((item, index) => (
+                <FAQItem 
+                  key={index}
+                  item={item}
+                  isOpen={activeIndex === index}
+                  onClick={() => handleToggle(index)}
+                  isDark={isDark}
+                />
+              ))}
+            </div>
+          </section>
+        );
+      };
+
+      // --- From App.tsx ---
+      const App = () => {
+        const [isModalOpen, setIsModalOpen] = useState(false);
+
+        return (
+          <div className="min-h-screen bg-cyan-50 flex items-center justify-center p-4 font-sans">
+            <main className="bg-white rounded-2xl shadow-lg w-full max-w-md mx-auto overflow-hidden">
+              <header 
+                className="flex justify-center items-center gap-4 py-4 px-4"
+                style={{ backgroundColor: '#fffbeb' }}
+              >
+                <img 
+                    src="https://github.com/AltheaCoding/image-hosting/blob/main/Solution_%20(5).PNG?raw=true" 
+                    alt="QRAR Logo" 
+                    className="h-14 w-auto"
+                />
+                <div>
+                    <p className="text-2xl font-bold text-stone-800">qrar.com</p>
+                    <p className="text-xl text-stone-600 font-semibold mt-1">安心找回中心</p>
+                </div>
+              </header>
+              
+              <div className="p-6 md:p-8 space-y-6">
+                <div className="relative">
+                  <img 
+                    src="https://github.com/AltheaCoding/HandDrawHero/blob/main/handdrawHero.png?raw=true" 
+                    alt="Hand-drawn illustration of a person finding a lost item and using QRAR to contact the owner" 
+                    className="rounded-2xl w-full h-auto object-cover"
+                  />
+                  
+                  <div className="absolute -bottom-4 -right-4 bg-white p-3 rounded-2xl shadow-lg animate-pulse">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-green-600" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M4,4H10V10H4V4M6,6V8H8V6H6M4,14H10V20H4V14M6,16V18H8V16H6M14,4H20V10H14V4M16,6V8H18V6H16M14,14H16V16H14V14M18,14H20V16H18V14M16,18H18V20H16V18M18,18H20V20H18V18M12,12H14V14H12V12M14,10H16V12H14V10M16,12H18V14H16V12M12,14H14V16H12V14M10,12H12V14H10V12Z" />
+                    </svg>
+                  </div>
+                </div>
+
+                <img 
+                  src="https://github.com/AltheaCoding/HandDrawHero/blob/main/Three_Steps_.png?raw=true" 
+                  alt="Three steps to use QRAR: 1. Scan QR code, 2. Send anonymous message, 3. Owner is notified"
+                  className="w-full h-auto object-cover"
+                />
+                
+                <p className="text-center text-stone-500">此 QR code 可協助尋找失物或走散親友。</p>
+              
+                <div className="space-y-4 pt-4">
+                  <div>
+                    <LineButton onClick={() => alert('Redirecting to LINE...')}>
+                      <LineIcon />
+                      <span> Line 匿名 傳送</span>
+                    </LineButton>
+                    <p className="text-center text-xs text-stone-500 mt-2 px-4">
+                      感謝您的協助，幫助完成後將贈送 100 則訊息額度。
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-6 md:p-8 space-y-6" style={{ backgroundColor: '#212c42' }}>
+                <SecondaryButton onClick={() => setIsModalOpen(true)}>
+                  沒有Line，要留言
+                </SecondaryButton>
+                
+                <footer 
+                  className="pt-4 text-left space-y-1" 
+                  style={{ color: '#FBF8F1', fontSize: '0.6rem', lineHeight: '1.5' }}
+                >
+                  <p>安全提醒：請認明 https://qrar.com 官方網址。</p>
+                  <p>本系統絕不會向您索取個資、密碼或金融帳戶。有任何疑慮請直撥 165 反詐騙專線。</p>
+                </footer>
+                
+                <FAQ isDark={true} />
+              </div>
+            </main>
+            
+            <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+          </div>
+        );
+      };
+      
+      // --- From index.tsx ---
+      const rootElement = document.getElementById('root');
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(<App />);
+
+    </script>
+  </body>
+</html>
