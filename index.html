@@ -79,7 +79,7 @@
       const faqData = [
         {
           question: 'Q1：QRAR 如何運作？',
-          answer: 'A：很簡單！您註冊後，我們會為您產生獨一無二的 QR code。您可以將它印出或購買我們的商品，貼在任何您想保護的物品上（如鑰匙圈、寵物項圈、背包）。當有人拾獲您的失物並掃描 QR code 時，他們就能透過我們的匿名系統聯絡您，完全不會洩漏您的個資。'
+          answer: 'A：很簡單！您掃描註冊後，此QR code將與您的聯繫方式綁定，您可以將此QRcode貼/掛在任何您想保護的物品上（如鑰匙圈、寵物項圈、背包）。 當有人拾獲您的失物並掃描 QR code 時，他們就能透過我們的匿名系統聯絡您，完全不會洩漏您的個資。此QRcode預設包含10則免費訊息。'
         },
         {
           question: 'Q2：我的個人資料安全嗎？',
@@ -189,23 +189,23 @@
 
         return (
           <div className="min-h-screen bg-cyan-50 flex items-center justify-center p-4 font-sans">
-            <main className="bg-white rounded-2xl shadow-lg w-full max-w-md mx-auto overflow-hidden">
+            <main className="bg-white rounded-2xl shadow-lg w-full max-w-lg mx-auto overflow-hidden">
               <header 
-                className="flex justify-between items-center py-2 px-4"
+                className="flex justify-between items-center py-4 px-6"
                 style={{ backgroundColor: '#fffbeb' }}
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <img 
                       src="https://github.com/AltheaCoding/image-hosting/blob/main/Solution_%20(5).PNG?raw=true" 
                       alt="QRAR Logo" 
-                      className="h-7 w-auto"
+                      className="h-8 w-auto"
                   />
                   <div>
-                      <p className="text-lg font-bold text-stone-800 leading-tight">qrar.com</p>
+                      <p className="text-xl font-bold text-stone-800 leading-tight">qrar.com</p>
                       <p className="text-base text-stone-600 font-semibold leading-tight">安心找回中心</p>
                   </div>
                 </div>
-                <p className="text-lg font-semibold text-amber-700">歡迎加入!</p>
+                <p className="text-xl font-bold text-amber-700">歡迎加入!</p>
               </header>
               
               <div className="p-6 md:p-8 text-center">
@@ -214,8 +214,8 @@
                     QRcode 聯繫，不暴露個資，安全、有保障。
                  </p>
                  <img 
-                  src="https://github.com/AltheaCoding/SplashScreen/blob/main/Three_Points.png?raw=true" 
-                  alt="QRAR三大優點圖示：快速建立、匿名聯繫、保障個資。"
+                  src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" 
+                  alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
                   className="w-full h-auto object-contain mb-6"
                 />
                 <div className="space-y-4">
@@ -225,8 +225,8 @@
                     </LineButton>
                 </div>
                 <img 
-                  src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_rmbg.gif?raw=true" 
-                  alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
+                  src="https://github.com/AltheaCoding/SplashScreen/blob/main/49301731841.png?raw=true" 
+                  alt="展示QRAR服務應用於寵物、鑰匙及手機等場景"
                   className="w-full h-auto object-contain my-6"
                 />
                 <p className="text-xs text-stone-500 pt-4">
