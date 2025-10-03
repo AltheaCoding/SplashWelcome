@@ -154,13 +154,23 @@
               
               <div className="p-6 md:p-8 text-center">
                  <h1 className="text-2xl font-bold text-stone-800">守護您的摯愛</h1>
-                 <p className="text-stone-600 mt-2 mb-2 leading-relaxed">
-                    QRcode 聯繫，不暴露個資，安全、有保障。
-                 </p>
+                 <div 
+                  className="my-2 inline-block"
+                  style={{ backgroundColor: '#cffafe99', transform: 'skewX(-15deg)' }}
+                >
+                  <div 
+                    className="py-2 px-4"
+                    style={{ transform: 'skewX(15deg)' }}
+                  >
+                    <p className="text-sm font-medium text-stone-800">
+                     QRcode 聯繫，不暴露個資，安全、有保障。
+                    </p>
+                  </div>
+                </div>
                  <img 
                   src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" 
                   alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
-                  className="w-full h-auto object-contain mb-6"
+                  className="w-full h-auto object-contain my-6"
                 />
                 <div className="space-y-4">
                     <a
@@ -170,7 +180,7 @@
                       className="w-full flex items-center justify-center gap-3 font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-4 transition-all duration-300 ease-in-out transform hover:scale-105 bg-[#06C755] text-white focus:ring-[#06C755]/50 animate-subtle-bounce"
                     >
                       <LineIcon />
-                      <span>註冊 - 馬上開始保護我的摯愛</span>
+                      <span>註冊 - 馬上保護</span>
                     </a>
                 </div>
                 <img 
