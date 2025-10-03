@@ -57,24 +57,6 @@
         </svg>
       );
 
-      // --- From components/Buttons.tsx ---
-      const LineButton = ({ children, disabled, ...props }) => {
-        return (
-          <button
-            {...props}
-            disabled={disabled}
-            className={`w-full flex items-center justify-center gap-3 font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-4 transition-all duration-300 ease-in-out transform hover:scale-105
-              ${disabled
-                ? 'bg-stone-200 text-stone-400 cursor-not-allowed'
-                : 'bg-[#06C755] text-white focus:ring-[#06C755]/50 animate-subtle-bounce'
-              }
-            `}
-          >
-            {children}
-          </button>
-        );
-      };
-
       // --- From components/FAQ.tsx ---
       const faqData = [
         {
@@ -147,65 +129,27 @@
         );
       };
 
-      // --- From components/QRCodeModal.tsx (New component) ---
-      const QRCodeModal = ({ isOpen, onClose }) => {
-        if (!isOpen) return null;
-
-        return (
-          <div 
-            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 transition-opacity duration-300 ease-in-out"
-            onClick={onClose}
-            aria-modal="true"
-            role="dialog"
-          >
-            <div 
-              className="bg-white rounded-2xl shadow-xl p-8 m-4 max-w-sm w-full text-center relative transition-transform duration-300 ease-in-out transform scale-100"
-              onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside
-            >
-              <button 
-                onClick={onClose}
-                className="absolute top-4 right-4 text-stone-500 hover:text-stone-800 transition-colors"
-                aria-label="Close modal"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <h3 className="text-xl font-bold text-stone-800 mb-2">使用 Line 掃描註冊</h3>
-              <p className="text-stone-600 mb-6">請使用您的 Line App 掃描下方的 QR code 以完成註冊流程。</p>
-              <img 
-                src="https://qr-official.line.me/sid/M/859xxicf.png" // Placeholder Line QR code
-                alt="Line QR Code for Registration"
-                className="w-56 h-56 mx-auto border-4 border-stone-100 rounded-lg"
-              />
-            </div>
-          </div>
-        );
-      };
-
       // --- From App.tsx ---
       const App = () => {
-        const [isModalOpen, setIsModalOpen] = useState(false);
-
         return (
           <div className="min-h-screen bg-cyan-50 flex items-center justify-center p-4 font-sans">
             <main className="bg-white rounded-2xl shadow-lg w-full max-w-lg mx-auto overflow-hidden">
               <header 
-                className="flex justify-between items-center py-4 px-6"
+                className="flex justify-between items-center py-3 px-5"
                 style={{ backgroundColor: '#fffbeb' }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                   <img 
                       src="https://github.com/AltheaCoding/image-hosting/blob/main/Solution_%20(5).PNG?raw=true" 
                       alt="QRAR Logo" 
-                      className="h-8 w-auto"
+                      className="h-7 w-auto"
                   />
                   <div>
-                      <p className="text-xl font-bold text-stone-800 leading-tight">qrar.com</p>
-                      <p className="text-base text-stone-600 font-semibold leading-tight">安心找回中心</p>
+                      <p className="text-lg font-bold text-stone-800 leading-tight">qrar.com</p>
+                      <p className="text-sm text-stone-600 font-semibold leading-tight">安心找回中心</p>
                   </div>
                 </div>
-                <p className="text-xl font-bold text-amber-700">歡迎加入!</p>
+                <p className="text-lg font-bold text-amber-700">歡迎加入!</p>
               </header>
               
               <div className="p-6 md:p-8 text-center">
@@ -219,10 +163,15 @@
                   className="w-full h-auto object-contain mb-6"
                 />
                 <div className="space-y-4">
-                    <LineButton onClick={() => setIsModalOpen(true)}>
+                    <a
+                      href="https://line.me/R/ti/p/@859xxicf"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full flex items-center justify-center gap-3 font-bold py-3 px-4 rounded-full shadow-md hover:shadow-lg focus:outline-none focus:ring-4 transition-all duration-300 ease-in-out transform hover:scale-105 bg-[#06C755] text-white focus:ring-[#06C755]/50 animate-subtle-bounce"
+                    >
                       <LineIcon />
                       <span>註冊 - 馬上開始保護我的摯愛</span>
-                    </LineButton>
+                    </a>
                 </div>
                 <img 
                   src="https://github.com/AltheaCoding/SplashScreen/blob/main/49301731841.png?raw=true" 
@@ -250,7 +199,6 @@
                 <FAQ isDark={true} />
               </div>
             </main>
-            <QRCodeModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
           </div>
         );
       };
