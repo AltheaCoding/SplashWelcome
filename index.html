@@ -188,8 +188,6 @@
       // --- From App.tsx ---
       const App = () => {
         const [modalContent, setModalContent] = useState(null); // null, 'terms', or 'privacy'
-        const [heroGifLoaded, setHeroGifLoaded] = useState(false);
-        const [heroPngLoaded, setHeroPngLoaded] = useState(false);
 
         const policies = {
             terms: {
@@ -291,17 +289,13 @@
                     </p>
                   </div>
                 </div>
-                {/* Image placeholder for hero GIF */}
-                <div className="relative w-full my-6 bg-stone-100 rounded-lg" style={{ paddingTop: '75%' }}>
-                    <img 
-                      src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" 
-                      alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
-                      className={`absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-500 ${heroGifLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      loading="eager"
-                      fetchpriority="high"
-                      onLoad={() => setHeroGifLoaded(true)}
-                    />
-                </div>
+                 <img 
+                  src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" 
+                  alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
+                  className="w-full h-auto object-contain my-6"
+                  loading="eager"
+                  fetchpriority="high"
+                />
                 <div className="space-y-4">
                     <a
                       href="https://line.me/R/ti/p/@859xxicf"
@@ -313,16 +307,11 @@
                       <span>註冊 - 馬上保護</span>
                     </a>
                 </div>
-                {/* Image placeholder for hero PNG */}
-                <div className="relative w-full my-6 bg-stone-100 rounded-lg" style={{ paddingTop: '48.16%' }}>
-                    <img 
-                      src="https://github.com/AltheaCoding/SplashScreen/blob/main/49301731841.png?raw=true" 
-                      alt="展示QRAR服務應用於寵物、鑰匙及手機等場景"
-                      className={`absolute top-0 left-0 w-full h-full object-contain transition-opacity duration-500 ${heroPngLoaded ? 'opacity-100' : 'opacity-0'}`}
-                      loading="lazy"
-                      onLoad={() => setHeroPngLoaded(true)}
-                    />
-                </div>
+                <img 
+                  src="https://github.com/AltheaCoding/SplashScreen/blob/main/49301731841.png?raw=true" 
+                  alt="展示QRAR服務應用於寵物、鑰匙及手機等場景"
+                  className="w-full h-auto object-contain my-6"
+                />
                 <p className="text-xs text-stone-500 pt-4">
                     註冊即表示您同意我們的
                     <button onClick={() => handleOpenModal('terms')} className="underline hover:text-stone-800 focus:outline-none transition-colors">服務條款</button> 和
