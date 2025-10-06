@@ -5,6 +5,11 @@
     <link rel="icon" type="image/png" href="https://github.com/AltheaCoding/image-hosting/blob/main/QRARicon.png?raw=true" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Join QRAR - Lost & Found Center</title>
+
+    <!-- Preload critical images to improve perceived load time -->
+    <link rel="preload" href="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" as="image" type="image/gif">
+    <link rel="preload" href="https://github.com/AltheaCoding/SplashScreen/blob/main/49301731841.png?raw=true" as="image" type="image/png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React and ReactDOM -->
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -288,6 +293,8 @@
                   src="https://github.com/AltheaCoding/SplashWelcome/blob/main/Steps_REBG.gif?raw=true" 
                   alt="QRAR registration steps: Get QR code, Attach to item, Finder scans, Get notified."
                   className="w-full h-auto object-contain my-6"
+                  loading="eager"
+                  fetchpriority="high"
                 />
                 <div className="space-y-4">
                     <a
